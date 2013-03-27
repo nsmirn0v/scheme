@@ -61,19 +61,11 @@
 	<br>
 	<div>sjsu&gt; (sumOfSqrs 5)<br><span class="success">50</span></div>
 	<br>
-	<div>sjsu&gt; (def lte (lambda (x y) (&lt;= x y)))<br><span class="success">procedure lte(x y)</span></div>
+	<div>sjsu&gt; (def lte <br>(lambda (x y)<br>(&lt;= x y)))<br><span class="success">procedure lte(x y)</span></div>
 	<br>
 	<div>sjsu&gt; (lte 5 6)<br><span class="success">#t</span></div>
 	<br>
-	<div>sjsu&gt; (def fn 
-	(lambda (x)
-	(if (lte (ss x) 100)
-	"ss(x) is less or equal to 100"
-	"ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
-	<br>
-	<div>sjsu&gt; (fn 5)<br><span class="error">ERROR: Unbound variable: ss.<span></span></span></div>
-	<br>
-	<div>sjsu&gt; (def fn (lambda (x) (if (lte (sumOfSqrs x) 100) "ss(x) is less or equal to 100" "ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
+	<div>sjsu&gt; (def fn <br>(lambda (x) <br>(if (lte (sumOfSqrs x) 100)<br>"ss(x) is less or equal to 100"<br>"ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
 	<br>
 	<div>sjsu&gt; (fn 5)<br><span class="success">"ss(x) is less or equal to 100"</span></div>
 	<br>
