@@ -65,74 +65,62 @@
       <div class="tab-pane fade" id="example">
         <pre>
 sjsu> a
-ERROR: Unbound variable: a.
+<span class="text-error">ERROR: Unbound variable: a.</span>
 
 sjsu> (def a 5)
-5
+<span class="text-success">5</span>
 
 sjsu> (def b 6)
-6
+<span class="text-success">6</span>
 
 sjsu> (def lte (lambda (x y) (<= x y)))
-procedure lte(x y)
+<span class="text-success">procedure lte(x y)</span>
 
 sjsu> (lte a b)
-#t
+<span class="text-success">#t</span>
 
-sjsu> (def double (lambda (x) (+ x x)))
-procedure double(x)
+sjsu> (def sum (lambda (x) (+ x x)))
+<span class="text-success">procedure sum(x)</span>
 
-sjsu> (double a)
-10
+sjsu> (sum a)
+<span class="text-success">10</span>
 
 sjsu> (def sqr (lambda (x) (* x x)))
-procedure sqr(x)
+<span class="text-success">procedure sqr(x)</span>
 
 sjsu> (sqr a)
-25
+<span class="text-success">25</span>
 
-sjsu> (def sumofsqrs (lambda (x) (sum (sqr x))))
-procedure sumofsqrs(x)
+sjsu> (def ss (lambda (x) (sum (sqr x))))
+<span class="text-success">procedure ss(x)</span>
 
-sjsu> (sqr a)
-25
+sjsu> (ss a)
+<span class="text-success">50</span>
 
-sjsu> (sqr b)
-36
+sjsu> (ss b)
+<span class="text-success">72</span>
 
-sjsu> (sumofsqrs a)
-ERROR: Unbound variable: sum.
-
-sjsu> (def sumofsqrs (lambda (x) (double (sqr x))))
-procedure sumofsqrs(x)
-
-sjsu> (sumofsqrs a)
-50
-
-sjsu> (sumofsqrs b)
-72
-
-sjsu> (def fn (lambda (x) (if (lte (sumofsqrs x) 100) 
-"sumofsqr(x) is less than 100" "sumofsqrs(x) is greater than 100")))
-procedure fn(x)
+sjsu> (def fn (lambda (x) (if (lte (ss x) 100) 
+<span class="text-success">"ss(x) is less than 100" "ss(x) is greater than 100")))
+procedure fn(x)</span>
 
 sjsu> (fn a)
-"sumofsqr(x) is less than 100"
+<span class="text-success">"ss(x) is less than 100"</span>
 
 sjsu> (fn 10)
-"sumofsqrs(x) is greater than 100"
+<span class="text-success">"ss(x) is greater than 100"</span>
 
 sjsu> (def c (fn a))
-"sumofsqr(x) is less than 100"
+<span class="text-success">"ss(x) is less than 100"</span>
 
 sjsu> c
-"sumofsqr(x) is less than 100"
+<span class="text-success">"ss(x) is less than 100"</span>
 
 sjsu> (cons a b c)
-ERROR: Wrong number of arguments to procedure cons.
+<span class="text-error">ERROR: Wrong number of arguments to procedure cons.</span>
 
 sjsu> (cons a c)
-(5 . "sumofsqr(x) is less than 100")
+<span class="text-success">(5 . "ss(x) is less than 100")</span>
 
 sjsu>
         </code>
