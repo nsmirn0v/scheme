@@ -34,7 +34,8 @@ var addReturnListener = function() {
 				alist = unparse(alist);
 			if (alist)
 				$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
-			
+			else
+			 	$("#output").append('<div>sjsu> ' + input[0] + '</div><br>');
 			resetInput();
 			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 		}
@@ -605,7 +606,7 @@ var ifelse = function(alist, formals) {
 		if (alist.cdr.cdr && alist.cdr.cdr.typ != 'nil')
 			return evalAlist(alist.cdr.cdr.car, formals); // cond is false AND else clause exists
 		else
-			return null; // else clause does not exist
+			return { typ: 'nil' }; // else clause does not exist
 	}
 	else {
 		return evalAlist(alist.cdr.car, formals); // cond is true
