@@ -1,6 +1,4 @@
 var input = [], command = -1;
-// 38 up
-// 40 down
 
 $(document).ready(function() {
 	addReturnListener();
