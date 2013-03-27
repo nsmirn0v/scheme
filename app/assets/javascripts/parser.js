@@ -15,7 +15,7 @@ var addTerminalListener = function() {
 }
 
 var addReturnListener = function() {
-	var str, alist;
+	var str, alist = null;
 
 	$("#input").keydown(function(event) {
 		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);	
@@ -34,7 +34,7 @@ var addReturnListener = function() {
 				alist = unparse(alist);
 			if (alist)
 				$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
-			else
+			else if (str)
 			 	$("#output").append('<div>sjsu> ' + input[0] + '</div><br>');
 			resetInput();
 			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
