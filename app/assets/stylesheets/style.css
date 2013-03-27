@@ -1,0 +1,97 @@
+.navbar {
+	margin-bottom: 30px;
+}
+
+#run {
+	width: 100%;
+	margin-bottom: 25px;
+}
+
+#terminal {
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding: 10px;
+	min-height: 300px;
+	max-height: 300px;
+	overflow: auto;
+	background: rgba(0, 0, 0, 0.8);
+	color:	white;
+	text-shadow: 0px 1px 1px black;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	margin-bottom:15px;
+}
+
+#terminal #output {
+	font-family: inherit;
+	min-height: 240px;
+	max-height: 240px;
+	overflow: auto;
+}
+
+#terminal #input {
+	padding-top: 5px;
+	font-family: inherit;
+	/*background: rgba(0, 0, 0, 0.8);*/
+}
+
+#terminal #input textarea {
+	resize: none;
+	font-family: inherit;
+	margin-top: -4px;
+	border: none;
+	box-shadow: none;
+	background: inherit;
+	color: white;
+	width: 800px;
+}
+
+#terminal #input textarea:focus {
+	box-shadow: none;
+	border: none;
+}
+
+.prompt {
+	vertical-align: top;
+}
+
+#vars {
+	min-height: 400px;
+}
+
+.output {
+	min-height: 400px;
+	max-height: 400px;
+	overflow: auto;
+}
+
+.error {
+	color: rgb(253, 90, 90);
+}
+
+.success {
+	color: rgb(115, 199, 115);
+}
+
+.sample {
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.8);
+	color:	white;
+	text-shadow: 0px 1px 1px black;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	margin-bottom:15px;
+}
+
+footer {
+	padding: 15px;
+	text-align: center;
+}

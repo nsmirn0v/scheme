@@ -1,0 +1,93 @@
+<div class="container">
+<table class="table table-bordered">
+  <tr>
+    <th>Procedures</th><td>cons, car, cdr, list, quote, +, -,
+      *, /, <, >, =, <= , >=, or, and
+    </td>
+  </tr>
+  <tr>
+    <th>Macros</th><td>def, if, lambda</td>
+  </tr>
+</table>
+
+<div id="terminal">
+  <div id="output"></div>
+
+  <div id="input">
+    <span class="prompt">sjsu></span> <textarea rows="1">
+    </textarea>
+  </div>
+</div>
+
+<button id="run" class="btn btn-primary btn-large disabled">Run</button>
+
+<div class="row">
+  <div class="span6">
+    <p class="lead">parse()</p>
+    <pre id="parse" class="output"></pre>
+  </div>
+  
+  <div class="span6">
+    <p class="lead">eval()</p>
+    <pre id="eval" class="output"></pre>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <p class="lead">
+      Symbol Table
+      <button class="btn" id="refresh">Refresh</button>
+    </p>
+    <pre id="vars" class=""></pre>
+  </div>
+</div>
+
+<!-- Sample Run -->
+<p class="lead">Sample Run</p>
+<div class="sample">
+  <div>sjsu&gt; (def a 5)
+	<br><span class="success">5</span></div>
+	<br>
+	<div>sjsu&gt; (def b 6)<br><span class="success">6</span></div>
+	<br>
+	<div>sjsu&gt; (+ a b)<br><span class="success">11</span></div>
+	<br>
+	<div>sjsu&gt; (def sum (lambda (x) (+ x x)))<br><span class="success">procedure sum(x)</span></div>
+	<br>
+	<div>sjsu&gt; (def sqr (lambda (x) (* x x)))<br><span class="success">procedure sqr(x)</span></div>
+	<br>
+	<div>sjsu&gt; (def sumOfSqrs (lambda (x) (sum (sqr x))))<br><span class="success">procedure sumOfSqrs(x)</span></div>
+	<br>
+	<div>sjsu&gt; (sumOfSqrs 5)<br><span class="success">50</span></div>
+	<br>
+	<div>sjsu&gt; (def lte (lambda (x y) (&lt;= x y)))<br><span class="success">procedure lte(x y)</span></div>
+	<br>
+	<div>sjsu&gt; (lte 5 6)<br><span class="success">#t</span></div>
+	<br>
+	<div>sjsu&gt; (def fn 
+	(lambda (x)
+	(if (lte (ss x) 100)
+	"ss(x) is less or equal to 100"
+	"ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
+	<br>
+	<div>sjsu&gt; (fn 5)<br><span class="error">ERROR: Unbound variable: ss.<span></span></span></div>
+	<br>
+	<div>sjsu&gt; (def fn (lambda (x) (if (lte (sumOfSqrs x) 100) "ss(x) is less or equal to 100" "ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
+	<br>
+	<div>sjsu&gt; (fn 5)<br><span class="success">"ss(x) is less or equal to 100"</span></div>
+	<br>
+	<div>sjsu&gt; (fn 10)<br><span class="success">"ss(x) is greater than 100"</span></div>
+	<br>
+</div>
+</div> 
+
+<footer>
+<p class="small muted">
+  CS152 Project by Nikolay Smirnov (Spring 2013)
+<p>
+</footer>
+
+<!-- javascript -->
+
+    
