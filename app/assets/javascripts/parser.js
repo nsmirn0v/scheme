@@ -1,90 +1,98 @@
-var rows = 1;
-var input;
+var input = [], command = -1;
+// 38 up
+// 40 down
 
 $(document).ready(function() {
-	inableDisableButton();
 	addReturnListener();
-	addButtonListener();
-	addRefresh();
-	$('textarea').focus();
+	addUpDownListener();
+	activateTabs();
+	$('#input').focus();
 });
 
 var addReturnListener = function() {
-	$('textarea').keypress(function(event) {
+	var str, alist;
+
+	$("#input").keydown(function(event) {
+		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);	
+
 		if (event.keyCode == 13) {
-			rows++;
-			$('textarea').attr('rows', rows);
-		}
-	});
-};
+			str = removeWhiteSpace($("#input").val());
 
-var addButtonListener = function() {
-	$("#run").click(function() {
-		input = $("textarea").val();
-		var alist = parse(input);
+			if (str) {
+				input.unshift(str);
+				alist = parse(input[0]);
+			}
 
-		if (alist)
-			alist = eval(alist);
-		if (alist)
-			alist = unparse(alist);
-
-		if (alist) {
-			$('#output').append('<div>sjsu> ' + input + '<br><span class=success>' + alist + '</span></div><br>');
+			if (alist)
+				alist = eval(alist);
+			if (alist)
+				alist = unparse(alist);
+			if (alist)
+				$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
+			
 			resetInput();
+			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 		}
-		
 	});
 };
 
-var inableDisableButton = function() {
-	$("textarea").keyup(function() {
-		var textarea = $("textarea");
-
-		if ((/^\s*$/).test(textarea.val()))
-			$("#run").addClass("disabled");
-		else 
-			$("#run").removeClass("disabled");	
+var addUpDownListener = function() {
+	$("#input").keydown(function(event) {
+		if (event.keyCode == 38 && input.length > 0) {
+			command++;
+			if (command >= input.length)
+				command = 0;
+			$("#input").val(input[command]);
+		} 
+		else if (event.keyCode == 40 && input.length > 0) {
+			command--;
+			if (command < 0)
+				command = input.length - 1;
+			$("#input").val(input[command]);
+		}
 	});
-
-	$("textarea").click(function() {
-		var textarea = $("textarea");
-
-		if ((/^\s*$/).test(textarea.val()))
-			$("#run").addClass("disabled");
-		else 
-			$("#run").removeClass("disabled");	
-	});
-}
+};
 
 var resetInput = function() {
-	rows = 1;
-	$('textarea').val("");
-	$('textarea').attr('rows', rows);
-	$("#output").scrollTop($("#output")[0].scrollHeight);
-	$('textarea').focus();
-	$("#run").addClass("disabled");
+	$("#input").val("").focus();
+	command = -1;
 };
 
 var showError = function(error) {
-	// var result = ('<div>sjsu> ' + input + "<br><span class='error'>" + error.message + '<span></div><br>');
-	$('#parse').text("");
-	$('#eval').text("");
-	$('#output').append('<div>sjsu> ' + input + "<br><span class='error'>ERROR: " + error.message + '<span></div><br>');
+	$("#parse").text("");
+	$("#eval").text("");
+	$("#output").append('<div>sjsu> ' + input[0] + "<br><span class='text-error'>ERROR: " + error.message + '<span></div><br>');
 	$("#output").scrollTop($("#output")[0].scrollHeight);
-	$('textarea').val("");
-	$('textarea').attr('rows', rows);
-	$('textarea').focus();
-	$("#run").addClass("disabled");
-};
-
-var addRefresh = function() {
-	$("#refresh").click(function() {
-		refreshVars();
-	});
+	$("#input").val("").focus();
+	command = -1;
 };
 
 var refreshVars = function() {
 	$("#vars").text(jsonToString(symbolTable, ''));
+};
+
+var removeWhiteSpace = function(str) {
+	var start = 0, end = str.length - 1;
+
+	if (/^\s*$/.test(str)){
+		return false;
+	}
+	else {
+		while (/\s/.test(str.charAt(start)))
+			start++;
+
+		while (/\s/.test(str.charAt(end))) 
+			end--;
+
+		return str.slice(start, end + 1);
+	}
+};
+
+var activateTabs = function() {
+	$('#tabs a').click(function (e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	})
 }
 
 /************************ PARSER ****************************/
@@ -613,7 +621,7 @@ var evalLambda = function(alist, formals) {
 		return evalAlist(body, formals);
 	}
 	else {
-		throw new Error('Invalid number of parameters to ' + 
+		throw new Error('Invalid number of arguments to ' + 
 										unparseLambda(alist.car.car.val, alist.car.cdr.formals) + '.');
 	}
 }
@@ -1029,6 +1037,7 @@ var addVariable = function(variable) {
 	symbolTable = { typ: 'cons',
 									car: variable,
 									cdr: symbolTable };
+	refreshVars();
 }
 
 /* Looks up a variable in symbol table. */

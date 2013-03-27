@@ -1,0 +1,67 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+.terminal {
+	box-sizing: border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	box-shadow: 0 0 20px gray;
+	padding: 10px;
+	min-height: 300px;
+	max-height: 300px;
+	overflow: auto;
+	background: rgba(0, 0, 0, 0.8);
+	color:	white;
+	margin:15px 0px;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+
+	.add-on {
+		border: none;
+		background: none;
+		text-shadow: none;
+		padding-left: 0;
+		padding-top: 0;
+		margin-right: 2px;
+		font-family: inherit;
+	}
+
+	#input {
+		color: white;
+		background: inherit;
+		resize: none;
+		border:none;
+		box-shadow: none;
+		padding-top: 0;
+		font-family: inherit;
+		&:focus {
+			outline: none;
+		}
+	}
+
+	#output {
+		.text-error {
+			color: rgb(253, 90, 90);
+		}
+		.text-success {
+			color: rgb(115, 199, 115);
+		}
+	}
+}
+
+.tab-content {
+	pre {
+		min-height: 350px;
+		max-height: 350px;
+		overflow: auto;
+	}
+}
+
+footer {
+	margin-top: 20px;
+	text-align: center;
+	color: white;
+	background: gray;
+}

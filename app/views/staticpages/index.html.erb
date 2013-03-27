@@ -1,85 +1,144 @@
-<div class="container">
-<table class="table table-bordered">
-  <tr>
-    <th>Procedures</th><td>cons, car, cdr, list, quote, +, -,
-      *, /, <, >, =, <= , >=, or, and
-    </td>
-  </tr>
-  <tr>
-    <th>Macros</th><td>def, if, lambda</td>
-  </tr>
-</table>
-
-<div id="terminal">
-  <div id="output"></div>
-
-  <div id="input">
-    <span class="prompt">sjsu></span> <textarea rows="1">
-    </textarea>
-  </div>
-</div>
-
-<button id="run" class="btn btn-primary btn-large disabled">Run</button>
-
-<div class="row">
-  <div class="span6">
-    <p class="lead">parse()</p>
-    <pre id="parse" class="output"></pre>
-  </div>
-  
-  <div class="span6">
-    <p class="lead">eval()</p>
-    <pre id="eval" class="output"></pre>
-  </div>
-</div>
-
-<div class="row">
+ <!-- Terminal -->
+ <section class="row">
   <div class="span12">
-    <p class="lead">
-      Symbol Table
-      <button class="btn" id="refresh">Refresh</button>
-    </p>
-    <pre id="vars" class=""></pre>
+
+    <h3 class="text-center muted">Simple Scheme Interpreter 
+      <small>
+        by 
+        <a href="http://www.linkedin.com/pub/nikolay-smirnov/22/ba7/5a1" target="_blank">
+          Nikolay Smirnov</a>
+        (CS152 Project)
+      </small>
+    </h3>
+
+    <div class="terminal">
+
+      <div>
+        <div id="output"></div>
+
+        <div class="input-prepend">
+          <span class="add-on">sjsu></span>
+          <input class="span11" id="input"></input>
+        </div>
+      </div>
+
+    </div>
+
+    <ul class="nav nav-tabs" id="tabs">
+      <li><a href="#info">Info</a></li>
+      <li class="active"><a href="#debug">Debug</a></li>
+      <li><a href="#symbol-table">Symbol table</a></li>
+      <li><a href="#example">Example</a></li>
+    </ul>
+     
+    <div class="tab-content">
+      <div class="tab-pane fade" id="info">
+        <table class="table table-bordered">
+          <tr>
+            <th>Procedures</th><td>cons, car, cdr, list, quote, +, -,
+              *, /, <, >, =, <= , >=, or, and
+            </td>
+          </tr>
+          <tr>
+            <th>Macros</th><td>def, if, lambda</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tab-pane in fade active" id="debug">
+        <div class="row">
+          <div class="span6">
+            <pre id="parse"></pre>
+            <p class="muted">Result of <code>parse()</code> function</p>
+          </div>
+          <div class="span6">
+            <pre id="eval"></pre>
+            <p class="muted">Result of <code>eval()</code> function</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="symbol-table">
+        <pre id="vars"></pre>
+        <p class="muted">Result of <code>addVariable()</code> function</p>
+      </div>
+      
+      <div class="tab-pane fade" id="example">
+        <pre>
+sjsu> a
+ERROR: Unbound variable: a.
+
+sjsu> (def a 5)
+5
+
+sjsu> (def b 6)
+6
+
+sjsu> (def lte (lambda (x y) (<= x y)))
+procedure lte(x y)
+
+sjsu> (lte a b)
+#t
+
+sjsu> (def double (lambda (x) (+ x x)))
+procedure double(x)
+
+sjsu> (double a)
+10
+
+sjsu> (def sqr (lambda (x) (* x x)))
+procedure sqr(x)
+
+sjsu> (sqr a)
+25
+
+sjsu> (def sumofsqrs (lambda (x) (sum (sqr x))))
+procedure sumofsqrs(x)
+
+sjsu> (sqr a)
+25
+
+sjsu> (sqr b)
+36
+
+sjsu> (sumofsqrs a)
+ERROR: Unbound variable: sum.
+
+sjsu> (def sumofsqrs (lambda (x) (double (sqr x))))
+procedure sumofsqrs(x)
+
+sjsu> (sumofsqrs a)
+50
+
+sjsu> (sumofsqrs b)
+72
+
+sjsu> (def fn (lambda (x) (if (lte (sumofsqrs x) 100) 
+"sumofsqr(x) is less than 100" "sumofsqrs(x) is greater than 100")))
+procedure fn(x)
+
+sjsu> (fn a)
+"sumofsqr(x) is less than 100"
+
+sjsu> (fn 10)
+"sumofsqrs(x) is greater than 100"
+
+sjsu> (def c (fn a))
+"sumofsqr(x) is less than 100"
+
+sjsu> c
+"sumofsqr(x) is less than 100"
+
+sjsu> (cons a b c)
+ERROR: Wrong number of arguments to procedure cons.
+
+sjsu> (cons a c)
+(5 . "sumofsqr(x) is less than 100")
+
+sjsu>
+        </code>
+      </div>
+    </div>
+
   </div>
-</div>
-
-<!-- Sample Run -->
-<p class="lead">Sample Run</p>
-<div class="sample">
-  <div>sjsu&gt; (def a 5)
-	<br><span class="success">5</span></div>
-	<br>
-	<div>sjsu&gt; (def b 6)<br><span class="success">6</span></div>
-	<br>
-	<div>sjsu&gt; (+ a b)<br><span class="success">11</span></div>
-	<br>
-	<div>sjsu&gt; (def sum (lambda (x) (+ x x)))<br><span class="success">procedure sum(x)</span></div>
-	<br>
-	<div>sjsu&gt; (def sqr (lambda (x) (* x x)))<br><span class="success">procedure sqr(x)</span></div>
-	<br>
-	<div>sjsu&gt; (def sumOfSqrs (lambda (x) (sum (sqr x))))<br><span class="success">procedure sumOfSqrs(x)</span></div>
-	<br>
-	<div>sjsu&gt; (sumOfSqrs 5)<br><span class="success">50</span></div>
-	<br>
-	<div>sjsu&gt; (def lte <br>(lambda (x y)<br>(&lt;= x y)))<br><span class="success">procedure lte(x y)</span></div>
-	<br>
-	<div>sjsu&gt; (lte 5 6)<br><span class="success">#t</span></div>
-	<br>
-	<div>sjsu&gt; (def fn <br>(lambda (x) <br>(if (lte (sumOfSqrs x) 100)<br>"ss(x) is less or equal to 100"<br>"ss(x) is greater than 100")))<br><span class="success">procedure fn(x)</span></div>
-	<br>
-	<div>sjsu&gt; (fn 5)<br><span class="success">"ss(x) is less or equal to 100"</span></div>
-	<br>
-	<div>sjsu&gt; (fn 10)<br><span class="success">"ss(x) is greater than 100"</span></div>
-	<br>
-</div>
-</div> 
-
-<footer>
-<p class="small muted">
-  CS152 Project by Nikolay Smirnov (Spring 2013)
-<p>
-</footer>
-
-<!-- javascript -->
-
-    
+ </section>
