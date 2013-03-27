@@ -6,8 +6,15 @@ $(document).ready(function() {
 	addReturnListener();
 	addUpDownListener();
 	activateTabs();
+	addTerminalListener();
 	$('#input').focus();
 });
+
+var addTerminalListener = function() {
+	$(".terminal").click(function() {
+		$("#input").focus();
+	});
+}
 
 var addReturnListener = function() {
 	var str, alist;
