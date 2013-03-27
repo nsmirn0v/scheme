@@ -23,7 +23,7 @@ var addReturnListener = function() {
 		if (event.keyCode == 13) {
 			str = removeWhiteSpace($("#input").val());
 
-			if (str) {
+			if (str.length > 0) {
 				input.unshift(str);
 				alist = parse(input[0]);
 			}
@@ -34,8 +34,8 @@ var addReturnListener = function() {
 				alist = unparse(alist);
 			if (alist)
 				$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
-			else if (str)
-			 	$("#output").append('<div>sjsu> ' + input[0] + '</div><br>');
+			else
+			 	$("#output").append('<div>sjsu></div><br>');
 			resetInput();
 			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 		}
@@ -81,7 +81,7 @@ var removeWhiteSpace = function(str) {
 	var start = 0, end = str.length - 1;
 
 	if (/^\s*$/.test(str)){
-		return false;
+		return "";
 	}
 	else {
 		while (/\s/.test(str.charAt(start)))
