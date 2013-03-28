@@ -26,6 +26,7 @@ var addReturnListener = function() {
 
 			if (str == "clear") {
 				$("#output").text("");
+				input.unshift(str);
 			}
 			else if (str.length > 0) {
 				input.unshift(str);
