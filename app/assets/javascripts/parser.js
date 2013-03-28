@@ -19,12 +19,15 @@ var addReturnListener = function() {
 	var str, alist = null;
 
 	$("#input").keydown(function(event) {
-		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);	
+		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 
 		if (event.keyCode == 13) {
 			str = removeWhiteSpace($("#input").val());
 
-			if (str.length > 0) {
+			if (str == "clear") {
+				$("#output").text("");
+			}
+			else if (str.length > 0) {
 				input.unshift(str);
 				resetDebugFields();
 				alist = parse(input[0]);
