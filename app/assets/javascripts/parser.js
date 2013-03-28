@@ -688,7 +688,7 @@ var plus = function(alist, formals) {
 	else if (alist.car.typ == 'var')
 		result = lookUp(alist.car, formals);
 	else if (alist.car.typ != 'cons' && alist.car.typ != 'number')
-		throw new Error('Wrong argument type: ' + alist.car.val + '.');
+		throw new Error('Wrong argument type: ' + alist.car.typ + '.');
 
 	if (result.typ == 'number') 
 		return result.val + plus(alist.cdr, formals);
@@ -708,7 +708,7 @@ var minus = function(alist, formals) {
 	else if (alist.car.typ == 'var')
 		result = lookUp(alist.car, formals);
 	else if (alist.car.typ != 'cons' && alist.car.typ != 'number')
-		throw new Error('Wrong argument type: ' + alist.car.val + '.');
+		throw new Error('Wrong argument type: ' + alist.car.typ + '.');
 
 	if (result.typ == 'number' && alist.cdr.typ == 'nil')
 		return -result.val;
@@ -730,7 +730,7 @@ var multiply = function(alist, formals) {
 	else if (alist.car.typ == 'var')
 		result = lookUp(alist.car, formals);
 	else if (alist.car.typ != 'cons' && alist.car.typ != 'number')
-		throw new Error('Wrong argument type: ' + alist.car.val + '.');
+		throw new Error('Wrong argument type: ' + alist.car.typ + '.');
 
 	if (result.typ == 'number') 
 		return result.val * multiply(alist.cdr, formals);
@@ -750,7 +750,7 @@ var divide = function(alist, formals) {
 	else if (alist.car.typ == 'var')
 		result = lookUp(alist.car, formals);
 	else if (alist.car.typ != 'cons' && alist.car.typ != 'number')
-		throw new Error('Wrong argument type: ' + alist.car.val + '.');
+		throw new Error('Wrong argument type: ' + alist.car.typ + '.');
 
 	if (result.typ == 'number' && alist.cdr.typ == 'nil')
 		return 1 / result.val;
@@ -775,7 +775,7 @@ var less = function(alist, formals) {
 	}
 
 	if (result.typ != 'cons' && result.typ != 'number') {
-		throw new Error('Wrong argument type: ' + result.val + '.');
+		throw new Error('Wrong argument type: ' + result.typ + '.');
 	}
 	else if (alist.cdr.typ == 'nil') {
 		if (result.typ == 'number')
@@ -813,7 +813,7 @@ var greater = function(alist, formals) {
 	}
 
 	if (result.typ != 'cons' && result.typ != 'number') {
-		throw new Error('Wrong argument type: ' + result.val + '.');
+		throw new Error('Wrong argument type: ' + result.typ + '.');
 	}
 	else if (alist.cdr.typ == 'nil') {
 		if (result.typ == 'number')
