@@ -54,8 +54,26 @@
 .tab-content {
 	pre {
 		min-height: 350px;
-		max-height: 350px;
+		/*max-height: 350px;*/
 		overflow: auto;
+	}
+
+	.example {
+		position: relative;
+
+		.test-run {
+			-moz-border-radius-bottomleft: 4px;
+			border-bottom-left-radius: 4px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: rgba(0, 136, 204, 0.7);
+			color: white;
+			font-size: 15px;
+			padding: 5px;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+		
 	}
 }
 

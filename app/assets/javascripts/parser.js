@@ -26,16 +26,23 @@ var addReturnListener = function() {
 			if (str.length > 0) {
 				input.unshift(str);
 				alist = parse(input[0]);
-			}
 
-			if (alist)
-				alist = eval(alist);
-			if (alist)
-				alist = unparse(alist);
-			if (alist)
-				$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
+				if (alist) {
+					alist = eval(alist);
+
+					if (alist) {
+						alist = unparse(alist);
+
+						if (alist)
+							$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
+						else
+						 	$("#output").append('<div>sjsu></div><br>');
+					}
+				}
+			}
 			else
-			 	$("#output").append('<div>sjsu></div><br>');
+				$("#output").append('<div>sjsu></div><br>');
+
 			resetInput();
 			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 		}

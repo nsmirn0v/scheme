@@ -27,43 +27,26 @@
       <li><a href="#info">Info</a></li>
       <li class="active"><a href="#debug">Debug</a></li>
       <li><a href="#symbol-table">Symbol table</a></li>
-      <li><a href="#example">Example</a></li>
     </ul>
      
     <div class="tab-content">
       <div class="tab-pane fade" id="info">
+        
         <table class="table table-bordered">
           <tr>
-            <th>Procedures</th><td>cons, car, cdr, list, quote, +, -,
-              *, /, <, >, =, <= , >=, or, and
+            <th>Procedures</th><td><code>cons</code>, <code>car</code>, <code>cdr</code>, 
+              <code>list</code>, <code>quote</code>, <code>+</code>, <code>-</code>,
+              <code>*</code>, <code>/</code>, <code><</code>, <code>></code>, <code>=</code>,
+              <code><=</code> , <code>>=</code>, <code>or</code>, <code>and</code>
             </td>
           </tr>
           <tr>
-            <th>Macros</th><td>def, if, lambda</td>
+            <th>Macros</th><td><code>def</code>, <code>if</code>, <code>lambda</code></td>
           </tr>
         </table>
-      </div>
 
-      <div class="tab-pane in fade active" id="debug">
-        <div class="row">
-          <div class="span6">
-            <pre id="parse"></pre>
-            <p class="muted">Result of <code>parse()</code> function</p>
-          </div>
-          <div class="span6">
-            <pre id="eval"></pre>
-            <p class="muted">Result of <code>eval()</code> function</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="symbol-table">
-        <pre id="vars"></pre>
-        <p class="muted">Result of <code>addVariable()</code> function</p>
-      </div>
-      
-      <div class="tab-pane fade" id="example">
-        <pre>
+        <pre class="example">
+          <span class="test-run">Test run</span>
 sjsu> a
 <span class="text-error">ERROR: Unbound variable: a.</span>
 
@@ -122,9 +105,28 @@ sjsu> (cons a b c)
 sjsu> (cons a c)
 <span class="text-success">(5 . "ss(x) is less than 100")</span>
 
-sjsu>
-        </code>
+sjsu></pre>
+        
       </div>
+
+      <div class="tab-pane in fade active" id="debug">
+        <div class="row">
+          <div class="span6">
+            <p class="muted">Result of <code>parse()</code> function</p>
+            <pre id="parse"></pre>
+          </div>
+          <div class="span6">
+            <p class="muted">Result of <code>eval()</code> function</p>
+            <pre id="eval"></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="symbol-table">
+        <p class="muted">Result of <code>addVariable()</code> function</p>
+        <pre id="vars"></pre>
+      </div>
+      
     </div>
 
   </div>
