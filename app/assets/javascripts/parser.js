@@ -37,12 +37,12 @@ var addReturnListener = function() {
 						alist = unparse(alist);
 
 						if (alist)
-							$("#output").append('<div>sjsu> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
+							$("#output").append('<div>> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
 						else
-						 	$("#output").append('<div>sjsu></div><br>');
+						 	$("#output").append('<div>></div><br>');
 					}
 					else {
-						$("#output").append('<div>sjsu> ' + input[0] + "<br><span class='text-error'>ERROR: Operation is not supported.<span></div><br>");
+						$("#output").append('<div>> ' + input[0] + "<br><span class='text-error'>ERROR: Operation is not supported.<span></div><br>");
 						$("#output").scrollTop($("#output")[0].scrollHeight);
 						$("#input").val("").focus();
 						command = -1;
@@ -50,7 +50,7 @@ var addReturnListener = function() {
 				}
 			}
 			else {
-				$("#output").append('<div>sjsu></div><br>');
+				$("#output").append('<div>></div><br>');
 				resetDebugFields();
 			}
 
@@ -85,7 +85,7 @@ var resetInput = function() {
 var showError = function(error) {
 	$("#parse").text("");
 	$("#eval").text("");
-	$("#output").append('<div>sjsu> ' + input[0] + "<br><span class='text-error'>ERROR: " + error.message + '<span></div><br>');
+	$("#output").append('<div>> ' + input[0] + "<br><span class='text-error'>ERROR: " + error.message + '<span></div><br>');
 	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 	$("#input").val("").focus();
 	command = -1;

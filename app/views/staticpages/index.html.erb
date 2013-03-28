@@ -16,7 +16,7 @@
         <div id="output"></div>
 
         <div class="input-prepend">
-          <span class="add-on">sjsu></span>
+          <span class="add-on">></span>
           <input class="span11" id="input"></input>
         </div>
       </div>
@@ -85,7 +85,7 @@
 
         <pre class="example">
           <span class="test-run">Test run</span>
-sjsu> (def factorial 
+> (def factorial 
         (lambda 
           (x) 
           (if (or (= x 0) (= x 1)) 
@@ -93,28 +93,28 @@ sjsu> (def factorial
             (* x (factorial (- x 1))))))
 <span class="text-success">procedure factorial(x)</span>
 
-sjsu> (factorial 0)
+> (factorial 0)
 <span class="text-success">1</span>
 
-sjsu> (factorial 4)
+> (factorial 4)
 <span class="text-success">24</span>
 
-sjsu> (def createList (lambda (x) (if (= x 0) (cons 0 ()) (cons x (createList (- x 1))))))
+> (def createList (lambda (x) (if (= x 0) (cons 0 ()) (cons x (createList (- x 1))))))
 <span class="text-success">procedure createList(x)</span>
 
-sjsu> (createList 5)
+> (createList 5)
 <span class="text-success">(5 4 3 2 1 0)</span>
 
-sjsu> (def num 10)
+> (def num 10)
 <span class="text-success">10</span>
 
-sjsu> (def l (createList num))
+> (def l (createList num))
 <span class="text-success">(10 9 8 7 6 5 4 3 2 1 0)</span>
 
-sjsu> l
+> l
 <span class="text-success">(10 9 8 7 6 5 4 3 2 1 0)</span>
 
-sjsu> (def fibonacci 
+> (def fibonacci 
         (lambda 
           (x y limit)
           (if (= limit 0) 
@@ -126,77 +126,77 @@ sjsu> (def fibonacci
                 (cons x (fibonacci (+ x y) x limit)))))))
 <span class="text-success">procedure fibonacci(x y limit)</span>
 
-sjsu> (def f (lambda (limit) (fibonacci 0 1 limit)))
+> (def f (lambda (limit) (fibonacci 0 1 limit)))
 <span class="text-success">procedure f(limit)</span>
 
-sjsu> (f 0)
+> (f 0)
 <span class="text-success">(0 1)</span>
 
-sjsu> (f 1)
+> (f 1)
 <span class="text-success">(0 1 1)</span>
 
-sjsu> (f 100)
+> (f 100)
 <span class="text-success">(0 1 1 2 3 5 8 13 21 34 55 89)</span>
 
-sjsu> a
+> a
 <span class="text-error">ERROR: Unbound variable: a.</span>
 
-sjsu> (def a 5)
+> (def a 5)
 <span class="text-success">5</span>
 
-sjsu> (def b 6)
+> (def b 6)
 <span class="text-success">6</span>
 
-sjsu> (def lte (lambda (x y) (<= x y)))
+> (def lte (lambda (x y) (<= x y)))
 <span class="text-success">procedure lte(x y)</span>
 
-sjsu> (lte a b)
+> (lte a b)
 <span class="text-success">#t</span>
 
-sjsu> (def sum (lambda (x) (+ x x)))
+> (def sum (lambda (x) (+ x x)))
 <span class="text-success">procedure sum(x)</span>
 
-sjsu> (sum a)
+> (sum a)
 <span class="text-success">10</span>
 
-sjsu> (def sqr (lambda (x) (* x x)))
+> (def sqr (lambda (x) (* x x)))
 <span class="text-success">procedure sqr(x)</span>
 
-sjsu> (sqr a)
+> (sqr a)
 <span class="text-success">25</span>
 
-sjsu> (def ss (lambda (x) (sum (sqr x))))
+> (def ss (lambda (x) (sum (sqr x))))
 <span class="text-success">procedure ss(x)</span>
 
-sjsu> (ss a)
+> (ss a)
 <span class="text-success">50</span>
 
-sjsu> (ss b)
+> (ss b)
 <span class="text-success">72</span>
 
-sjsu> (def fn (lambda (x) (if (lte (ss x) 100) 
+> (def fn (lambda (x) (if (lte (ss x) 100) 
       "ss(x) is less than 100" "ss(x) is greater than 100")))
 <span class="text-success">procedure fn(x)</span>
 
-sjsu> (fn a)
+> (fn a)
 <span class="text-success">"ss(x) is less than 100"</span>
 
-sjsu> (fn 10)
+> (fn 10)
 <span class="text-success">"ss(x) is greater than 100"</span>
 
-sjsu> (def c (fn a))
+> (def c (fn a))
 <span class="text-success">"ss(x) is less than 100"</span>
 
-sjsu> c
+> c
 <span class="text-success">"ss(x) is less than 100"</span>
 
-sjsu> (cons a b c)
+> (cons a b c)
 <span class="text-error">ERROR: Wrong number of arguments to procedure cons.</span>
 
-sjsu> (cons a c)
+> (cons a c)
 <span class="text-success">(5 . "ss(x) is less than 100")</span>
 
-sjsu></pre>
+></pre>
         
       </div>
 
