@@ -2,13 +2,14 @@
 @import "bootstrap-responsive";
 
 .terminal {
-	box-sizing: border-box;
+	/*box-sizing: border-box;
 	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
+	-webkit-box-sizing:border-box;*/
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	box-shadow: 0 0 20px gray;
+	/*box-shadow: 0 0 20px gray;*/
+	border: 2px solid rgba(255, 255, 255, 0.55);
 	padding: 10px;
 	min-height: 300px;
 	max-height: 300px;
@@ -74,11 +75,4 @@
 		}
 		
 	}
-}
-
-footer {
-	margin-top: 20px;
-	text-align: center;
-	color: white;
-	background: gray;
 }

@@ -86,7 +86,7 @@ var showError = function(error) {
 	$("#parse").text("");
 	$("#eval").text("");
 	$("#output").append('<div>sjsu> ' + input[0] + "<br><span class='text-error'>ERROR: " + error.message + '<span></div><br>');
-	$("#output").scrollTop($("#output")[0].scrollHeight);
+	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 	$("#input").val("").focus();
 	command = -1;
 };
@@ -423,7 +423,7 @@ var isBoolean = function(token) {
 /********************************************************************/
 
 var evalAlist = function(alist, formals) {
-	var result = {};
+	var result = {}, temp;
 
 	if (alist.typ != 'cons') {
 		result = evalSimpleAlist(alist, formals)	;
@@ -471,19 +471,24 @@ var evalAlist = function(alist, formals) {
 				result = { typ: 'number', val: divide(alist.cdr, formals)};
 				break;
 			case 4: // '<'
-				result = { typ: 'boolean', val: less(alist.cdr, formals) ? '#t' : '#f' };
+				temp = less(alist.cdr, formals);
+				result = { typ: 'boolean', val: (temp || temp === 0)  ? '#t' : '#f' };
 				break;
 			case 5: // '>'
-				result = { typ: 'boolean', val: greater(alist.cdr, formals) ? '#t' : '#f' };
+				temp = greater(alist.cdr, formals);
+				result = { typ: 'boolean', val: (temp || temp === 0) ? '#t' : '#f' };
 				break;
 			case 6: // '='
-				result = { typ: 'boolean', val: equal(alist.cdr, formals) ? '#t' : '#f' };
+				temp = equal(alist.cdr, formals);
+				result = { typ: 'boolean', val: (temp || temp === 0) ? '#t' : '#f' };
 				break;
 			case 7: // '<='
-				result = { typ: 'boolean', val: lessOrEquals(alist.cdr, formals) ? '#t' : '#f'};
+				temp = lessOrEquals(alist.cdr, formals);
+				result = { typ: 'boolean', val: (temp || temp === 0) ? '#t' : '#f'};
 				break;
 			case 8: // '>='
-				result = { typ: 'boolean', val: greaterOrEquals(alist.cdr, formals) ? '#t' : '#f'};
+				temp = greaterOrEquals(alist.cdr, formals);
+				result = { typ: 'boolean', val: (temp || temp === 0) ? '#t' : '#f'};
 				break;
 			case 9: // 'or'
 				result = or(alist.cdr, formals);
@@ -820,7 +825,7 @@ var greater = function(alist, formals) {
 	if (result.typ == 'number') {
 		var temp = greater(alist.cdr, formals);
 
-		if (temp && result.val > temp)
+		if ((temp || temp === 0) && result.val > temp)
 			return result.val;
 		else 
 			return false;
@@ -837,18 +842,19 @@ var greater = function(alist, formals) {
 var equal = function(alist, formals) {
 	var result;
 
-	if (alist.typ != 'nil' && alist.car)
-		result = alist.car;
-
 	if (alist.typ == 'nil') {
 		return true;
 	}
-	else if (alist.car.typ == 'var') {
+
+	if (alist.car)
+		result = alist.car;
+	
+	if (alist.car.typ == 'var') {
 		result = evalAlist(alist.car, formals);
 	}
 
 	if (result.typ != 'cons' && result.typ != 'number') {
-		throw new Error('Wrong argument type: ' + result.val + '.');
+		throw new Error('Wrong argument type: ' + result.typ + '.');
 	}
 	else if (alist.cdr.typ == 'nil') {
 		if (result.typ == 'number')
@@ -860,7 +866,7 @@ var equal = function(alist, formals) {
 	if (result.typ == 'number') {
 		var temp = equal(alist.cdr, formals);
 
-		if (temp && result.val == temp)
+		if ((temp || temp === 0) && (result.val == temp))
 			return result.val;
 		else 
 			return false;
@@ -868,7 +874,7 @@ var equal = function(alist, formals) {
 	else {
 		var car = evalAlist(result, formals);
 	
-		if (car.val > greater(alist.cdr, formals))
+		if (car.val = equal(alist.cdr, formals))
 			return car.val;
 	}
 }
@@ -888,7 +894,7 @@ var lessOrEquals = function(alist, formals) {
 	}
 
 	if (result.typ != 'cons' && result.typ != 'number') {
-		throw new Error('Wrong argument type: ' + result.val + '.');
+		throw new Error('Wrong argument type: ' + result.typ + '.');
 	}
 	else if (alist.cdr.typ == 'nil') {
 		if (result.typ == 'number')
@@ -900,7 +906,7 @@ var lessOrEquals = function(alist, formals) {
 	if (result.typ == 'number') {
 		var temp = lessOrEquals(alist.cdr, formals);
 
-		if (temp && result.val <= temp)
+		if ((temp || temp === 0) && result.val <= temp)
 			return result.val;
 		else 
 			return false;
@@ -928,7 +934,7 @@ var greaterOrEquals = function(alist, formals) {
 	}
 
 	if (result.typ != 'cons' && result.typ != 'number') {
-		throw new Error('Wrong argument type: ' + result.val + '.');
+		throw new Error('Wrong argument type: ' + result.typ + '.');
 	}
 	else if (alist.cdr.typ == 'nil') {
 		if (result.typ == 'number')
@@ -940,7 +946,7 @@ var greaterOrEquals = function(alist, formals) {
 	if (result.typ == 'number') {
 		var temp = greaterOrEquals(alist.cdr, formals);
 
-		if (temp && result.val >= temp)
+		if ((temp || temp === 0) && result.val >= temp)
 			return result.val;
 		else 
 			return false;

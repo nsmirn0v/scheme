@@ -85,6 +85,59 @@
 
         <pre class="example">
           <span class="test-run">Test run</span>
+sjsu> (def factorial 
+        (lambda 
+          (x) 
+          (if (or (= x 0) (= x 1)) 
+            1 
+            (* x (factorial (- x 1))))))
+<span class="text-success">procedure factorial(x)</span>
+
+sjsu> (factorial 0)
+<span class="text-success">1</span>
+
+sjsu> (factorial 4)
+<span class="text-success">24</span>
+
+sjsu> (def createList (lambda (x) (if (= x 0) (cons 0 ()) (cons x (createList (- x 1))))))
+<span class="text-success">procedure createList(x)</span>
+
+sjsu> (createList 5)
+<span class="text-success">(5 4 3 2 1 0)</span>
+
+sjsu> (def num 10)
+<span class="text-success">10</span>
+
+sjsu> (def l (createList num))
+<span class="text-success">(10 9 8 7 6 5 4 3 2 1 0)</span>
+
+sjsu> l
+<span class="text-success">(10 9 8 7 6 5 4 3 2 1 0)</span>
+
+sjsu> (def fibonacci 
+        (lambda 
+          (x y limit)
+          (if (= limit 0) 
+            (list 0 1)
+            (if (and (= x 0) (= y 1))
+              (cons 0 (cons 1 (fibonacci (+ x y) y limit)))
+              (if (>= (+ x y) limit) 
+                (cons x ())
+                (cons x (fibonacci (+ x y) x limit)))))))
+<span class="text-success">procedure fibonacci(x y limit)</span>
+
+sjsu> (def f (lambda (limit) (fibonacci 0 1 limit)))
+<span class="text-success">procedure f(limit)</span>
+
+sjsu> (f 0)
+<span class="text-success">(0 1)</span>
+
+sjsu> (f 1)
+<span class="text-success">(0 1 1)</span>
+
+sjsu> (f 100)
+<span class="text-success">(0 1 1 2 3 5 8 13 21 34 55 89)</span>
+
 sjsu> a
 <span class="text-error">ERROR: Unbound variable: a.</span>
 
