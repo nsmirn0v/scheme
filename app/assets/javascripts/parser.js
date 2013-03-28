@@ -4,6 +4,7 @@ $(document).ready(function() {
 	addReturnListener();
 	addUpDownListener();
 	activateTabs();
+	activateTooltips();
 	addTerminalListener();
 	$('#input').focus();
 });
@@ -25,12 +26,14 @@ var addReturnListener = function() {
 
 			if (str.length > 0) {
 				input.unshift(str);
+				resetDebugFields();
 				alist = parse(input[0]);
 
 				if (alist) {
 					alist = eval(alist);
 
-					if (alist) {
+					if (alist.typ) {
+						updateHeight();
 						alist = unparse(alist);
 
 						if (alist)
@@ -38,10 +41,18 @@ var addReturnListener = function() {
 						else
 						 	$("#output").append('<div>sjsu></div><br>');
 					}
+					else {
+						$("#output").append('<div>sjsu> ' + input[0] + "<br><span class='text-error'>ERROR: Operation is not supported.<span></div><br>");
+						$("#output").scrollTop($("#output")[0].scrollHeight);
+						$("#input").val("").focus();
+						command = -1;
+					}
 				}
 			}
-			else
+			else {
 				$("#output").append('<div>sjsu></div><br>');
+				resetDebugFields();
+			}
 
 			resetInput();
 			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
@@ -106,7 +117,28 @@ var activateTabs = function() {
 	  e.preventDefault();
 	  $(this).tab('show');
 	})
-}
+};
+
+var activateTooltips = function() {
+	$("[data-toggle]").tooltip();
+};
+
+var updateHeight = function() {
+	var parse = $("#parse").height(),
+		  eval = $("#eval").height(),
+		  newHeight = 0;
+
+	if (parse > 350 || eval > 350) {
+		newHeight = parse > eval ? parse : eval;
+		$("#parse").css("min-height", newHeight + "px");
+		$("#eval").css("min-height", newHeight + "px");
+	}
+};
+
+var resetDebugFields = function() {
+	$("#parse").text("").css("min-height", "350px");
+	$("#eval").text("").css("min-height", "350px");
+};
 
 /************************ PARSER ****************************/
 var keywords = [ 'cons', 

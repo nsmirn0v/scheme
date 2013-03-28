@@ -34,14 +34,52 @@
         
         <table class="table table-bordered">
           <tr>
-            <th>Procedures</th><td><code>cons</code>, <code>car</code>, <code>cdr</code>, 
-              <code>list</code>, <code>quote</code>, <code>+</code>, <code>-</code>,
-              <code>*</code>, <code>/</code>, <code><</code>, <code>></code>, <code>=</code>,
-              <code><=</code> , <code>>=</code>, <code>or</code>, <code>and</code>
+            <th>Procedures</th>
+            <td>
+              <code data-toggle="tooltip" data-original-title="( cons <sexpr> <sexpr> )">
+                cons</code>,
+              <code data-toggle="tooltip" data-original-title="( car <sexpr> ) NOTE: <sexpr> must evalutate to cons or list">
+                car</code>, 
+              <code data-toggle="tooltip" data-original-title="( cdr <sexpr> ) NOTE: <sexpr> must evalutate to cons or list">
+                cdr</code>, 
+              <code data-toggle="tooltip" data-original-title="( list <sexpr> ... )">
+                list</code>, 
+              <code data-toggle="tooltip" data-original-title="( quote ( <sexpr> ... ) )">
+                quote</code>, 
+              <code data-toggle="tooltip" data-original-title="( + <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                +</code> , 
+              <code data-toggle="tooltip" data-original-title="( - <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                -</code>,
+              <code data-toggle="tooltip" data-original-title="( * <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                *</code>, 
+              <code data-toggle="tooltip" data-original-title="( / <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                /</code>, 
+              <code data-toggle="tooltip" data-original-title="( < <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                <</code>, 
+              <code data-toggle="tooltip" data-original-title="( > <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                ></code>, 
+              <code data-toggle="tooltip" data-original-title="( = <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                =</code>,
+              <code data-toggle="tooltip" data-original-title="( <= <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                <=</code> , 
+              <code data-toggle="tooltip" data-original-title="( >= <sexpr> ... ) NOTE: <sexpr> must evalutate to number">
+                >=</code>, 
+              <code data-toggle="tooltip" data-original-title="( or <sexpr> ... ) NOTE: <sexpr> must evalutate to boolean">
+                or</code>, 
+              <code data-toggle="tooltip" data-original-title="( and <sexpr> ... ) NOTE: <sexpr> must evalutate to boolean">
+                and</code>
             </td>
           </tr>
           <tr>
-            <th>Macros</th><td><code>def</code>, <code>if</code>, <code>lambda</code></td>
+            <th>Macros</th>
+            <td>
+              <code data-toggle="tooltip" data-original-title="( def <varname> <sexpr> )">
+                def</code>, 
+              <code data-toggle="tooltip" data-original-title="( if <sexpr> <then_sexpr> <else_sexpr> ) NOTE: <else_sexpr> is optional">
+                if</code>, 
+              <code data-toggle="tooltip" data-original-title="( lambda (<varname> ... ) <sexpr> )">
+                lambda</code>
+            </td>
           </tr>
         </table>
 
