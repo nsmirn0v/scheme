@@ -2,56 +2,62 @@
 @import "bootstrap-responsive";
 
 .terminal {
-	/*box-sizing: border-box;
-	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;*/
+	z-index: -1;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	/*box-shadow: 0 0 20px gray;*/
 	border: 2px solid rgba(255, 255, 255, 0.55);
 	padding: 10px;
-	min-height: 300px;
-	max-height: 300px;
-	overflow: auto;
 	background: rgba(0, 0, 0, 0.8);
 	color:	white;
 	margin:15px 0px;
 	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 
-	.add-on {
-		border: none;
-		background: none;
-		text-shadow: none;
-		padding-left: 0;
-		padding-top: 0;
-		margin-right: -2px;
-		margin-left: -4px;
-		font-family: inherit;
+	.header {
+		background: rgba(255,255,255, 0.3);
+		margin: -10px -10px 10px -10px;
+		padding-right: 5px;
 	}
 
-	#input {
-		color: white;
-		background: inherit;
-		resize: none;
-		border:none;
-		box-shadow: none;
-		padding-top: 0;
-		font-family: inherit;
-		&:focus {
-			outline: none;
+	.body {
+		min-height: 300px;
+		max-height: 300px;
+		overflow: auto;
+		
+		.add-on {
+			border: none;
+			background: none;
+			text-shadow: none;
+			padding-left: 0;
+			padding-top: 0;
+			margin-right: -2px;
+			margin-left: -4px;
+			font-family: inherit;
 		}
-	}
 
-	#output {
-		.continue {
-			margin-left: 16px;
+		#input {
+			color: white;
+			background: inherit;
+			resize: none;
+			border:none;
+			box-shadow: none;
+			padding-top: 0;
+			font-family: inherit;
+			&:focus {
+				outline: none;
+			}
 		}
-		.text-error {
-			color: rgb(253, 90, 90);
-		}
-		.text-success {
-			color: rgb(115, 199, 115);
+
+		#output {
+			.continue {
+				margin-left: 16px;
+			}
+			.text-error {
+				color: rgb(253, 90, 90);
+			}
+			.text-success {
+				color: rgb(115, 199, 115);
+			}
 		}
 	}
 }

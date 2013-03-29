@@ -1,4 +1,10 @@
-var input = [], command = -1, line = "", parenthesis = 0, multiline = false, ctrlc = 0;
+var input = [], 
+		command = -1, 
+		line = "", 
+		parenthesis = 0, 
+		multiline = false, 
+		ctrlc = 0,
+		fullscreen = false;
 
 $(document).ready(function() {
 	addReturnListener();
@@ -7,6 +13,7 @@ $(document).ready(function() {
 	activateTooltips();
 	addTerminalListener();
 	addCtrlClistener();
+	addFullscreenListener();
 	$('#input').focus();
 });
 
@@ -14,11 +21,11 @@ var addTerminalListener = function() {
 	$(".terminal").click(function() {
 		$("#input").focus();
 	});
-}
+};
 
 var addReturnListener = function() {
 	$("#input").keydown(function(event) {
-		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
+		$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 
 		if (event.keyCode == 13) {
 			processInput();
@@ -27,9 +34,6 @@ var addReturnListener = function() {
 };
 
 var addCtrlClistener = function() {
-	// ctrl = 17
-	// c = 67
-
 	$("#input").keydown(function(event) {
 		if (event.keyCode == 17 || event.keyCode == 67)
 			ctrlc += event.keyCode;
@@ -41,14 +45,16 @@ var addCtrlClistener = function() {
 				line = "";
 				command = -1;
 				multiline = false;
+				parenthesis = 0;
 				$("#output").append("<div class=continue>" + removeWhiteSpace($("input").val()) 
-					+ "<span class=text-error> Ctrl + C</span></div>");
+					+ "<span class=text-warning> Ctrl + C</span></div>");
 				$(".add-on").text(">");
 				$("#input").val("").focus();
+				$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 			}
 			ctrlc = 0;
 	});
-}
+};
 
 var addUpDownListener = function() {
 	$("#input").keydown(function(event) {
@@ -146,7 +152,7 @@ var processInput = function() {
 		$("#input").val("").focus();
 	}
 	resetInput();
-	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
+	$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 }
 
 var checkParen = function(str) {
@@ -168,7 +174,7 @@ var showError = function(error) {
 	$("#parse").text("");
 	$("#eval").text("");
 	$("#output").append("<div><span class='text-error'>ERROR: " + error.message + "<span></div>");
-	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
+	$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 	$("#input").val("").focus();
 	command = -1;
 	line = "";
@@ -223,6 +229,33 @@ var resetDebugFields = function() {
 	$("#parse").text("").css("min-height", "350px");
 	$("#eval").text("").css("min-height", "350px");
 };
+
+
+var addFullscreenListener = function() {
+	$("#full-screen").click(function(event) {
+		if (fullscreen) {
+			resetTerminal(event);
+			fullscreen = false;
+		}
+		else {
+			resizeTerminal(event);
+			fullscreen = true;
+		}
+		$("#full-screen i").toggleClass("icon-resize-full icon-resize-small")
+	});
+}
+
+var resetTerminal = function(event) {
+	event.preventDefault();
+	$(window).scrollTop(0);
+	$(".terminal .body").css("min-height", "300px").css("max-height", "300px");
+}
+
+var resizeTerminal = function(event) {
+	event.preventDefault();
+	$(window).scrollTop(55);
+	$(".terminal .body").css("min-height", $(window).height() - 110 + "px").css("max-height", $(window).height() - 110 + "px");
+}
 
 /************************ PARSER ****************************/
 var keywords = [ 'cons', 
