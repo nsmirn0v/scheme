@@ -27,6 +27,7 @@
       Use
       <code><i class="icon-arrow-up"></i></code> or <code><i class="icon-arrow-down"></i></code>
       keys to scroll through previous commands. Type <code>clear</code> to clear terminal output.
+      Use <code> Ctrl + C</code> to exit multiline input.
     </p><br>
 
     <ul class="nav nav-tabs" id="tabs">
@@ -92,11 +93,11 @@
         <pre class="example">
           <span class="test-run">Test run</span>
 > (def factorial 
-        (lambda 
-          (x) 
-          (if (or (= x 0) (= x 1)) 
-            1 
-            (* x (factorial (- x 1))))))
+    (lambda 
+      (x) 
+      (if (or (= x 0) (= x 1)) 
+        1 
+        (* x (factorial (- x 1))))))
 <span class="text-success">procedure factorial(x)</span>
 
 > (factorial 0)
@@ -105,7 +106,13 @@
 > (factorial 4)
 <span class="text-success">24</span>
 
-> (def createList (lambda (x) (if (= x 0) (cons 0 ()) (cons x (createList (- x 1))))))
+> (def createList 
+    (lambda 
+      (x) 
+      (if 
+        (= x 0) 
+        (cons 0 ())
+        (cons x (createList (- x 1))))))
 <span class="text-success">procedure createList(x)</span>
 
 > (createList 5)
@@ -121,15 +128,15 @@
 <span class="text-success">(10 9 8 7 6 5 4 3 2 1 0)</span>
 
 > (def fibonacci 
-        (lambda 
-          (x y limit)
-          (if (= limit 0) 
-            (list 0 1)
-            (if (and (= x 0) (= y 1))
-              (cons 0 (cons 1 (fibonacci (+ x y) y limit)))
-              (if (>= (+ x y) limit) 
-                (cons x ())
-                (cons x (fibonacci (+ x y) x limit)))))))
+    (lambda 
+      (x y limit)
+      (if (= limit 0) 
+        (list 0 1)
+        (if (and (= x 0) (= y 1))
+          (cons 0 (cons 1 (fibonacci (+ x y) y limit)))
+          (if (>= (+ x y) limit) 
+            (cons x ())
+            (cons x (fibonacci (+ x y) x limit)))))))
 <span class="text-success">procedure fibonacci(x y limit)</span>
 
 > (def f (lambda (limit) (fibonacci 0 1 limit)))
@@ -180,8 +187,13 @@
 > (ss b)
 <span class="text-success">72</span>
 
-> (def fn (lambda (x) (if (lte (ss x) 100) 
-      "ss(x) is less than 100" "ss(x) is greater than 100")))
+> (def fn 
+    (lambda 
+      (x) 
+      (if 
+        (lte (ss x) 100) 
+        "ss(x) is less than 100"
+        "ss(x) is greater than 100")))
 <span class="text-success">procedure fn(x)</span>
 
 > (fn a)

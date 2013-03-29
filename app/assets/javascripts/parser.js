@@ -1,4 +1,4 @@
-var input = [], command = -1;
+var input = [], command = -1, line = "", parenthesis = 0, multiline = false, ctrlc = 0;
 
 $(document).ready(function() {
 	addReturnListener();
@@ -6,6 +6,7 @@ $(document).ready(function() {
 	activateTabs();
 	activateTooltips();
 	addTerminalListener();
+	addCtrlClistener();
 	$('#input').focus();
 });
 
@@ -16,53 +17,38 @@ var addTerminalListener = function() {
 }
 
 var addReturnListener = function() {
-	var str, alist = null;
-
 	$("#input").keydown(function(event) {
 		$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 
 		if (event.keyCode == 13) {
-			str = removeWhiteSpace($("#input").val());
-
-			if (str == "clear") {
-				$("#output").text("");
-				input.unshift(str);
-			}
-			else if (str.length > 0) {
-				input.unshift(str);
-				resetDebugFields();
-				alist = parse(input[0]);
-
-				if (alist) {
-					alist = eval(alist);
-
-					if (alist.typ) {
-						updateHeight();
-						alist = unparse(alist);
-
-						if (alist)
-							$("#output").append('<div>> ' + input[0] + '<br><span class=text-success>' + alist + '</span></div><br>');
-						else
-						 	$("#output").append('<div>></div><br>');
-					}
-					else {
-						$("#output").append('<div>> ' + input[0] + "<br><span class='text-error'>ERROR: Operation is not supported.<span></div><br>");
-						$("#output").scrollTop($("#output")[0].scrollHeight);
-						$("#input").val("").focus();
-						command = -1;
-					}
-				}
-			}
-			else {
-				$("#output").append('<div>></div><br>');
-				resetDebugFields();
-			}
-
-			resetInput();
-			$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
+			processInput();
 		}
 	});
 };
+
+var addCtrlClistener = function() {
+	// ctrl = 17
+	// c = 67
+
+	$("#input").keydown(function(event) {
+		if (event.keyCode == 17 || event.keyCode == 67)
+			ctrlc += event.keyCode;
+	});
+
+	$("#input").keyup(function(event) {
+		if (event.keyCode == 17 || event.keyCode == 67)
+			if (ctrlc == 84 && multiline) {
+				line = "";
+				command = -1;
+				multiline = false;
+				$("#output").append("<div class=continue>" + removeWhiteSpace($("input").val()) 
+					+ "<span class=text-error> Ctrl + C</span></div>");
+				$(".add-on").text(">");
+				$("#input").val("").focus();
+			}
+			ctrlc = 0;
+	});
+}
 
 var addUpDownListener = function() {
 	$("#input").keydown(function(event) {
@@ -81,18 +67,112 @@ var addUpDownListener = function() {
 	});
 };
 
+var processInput = function() {
+	var str, alist = null;
+
+	str = $("#input").val();
+	line += " " + str;
+	checkParen(str);
+
+	if (parenthesis < 0) {
+		input.unshift(removeWhiteSpace(line));
+		line = "";
+		if (multiline)
+			$("#output").append("<div class=continue> " + str + 
+				"</div>" + "<span class='text-error'>ERROR: unexpected ')'.<span><br>");
+		else
+			$("#output").append("<div>> " + str + "</div>" + 
+				"<span class='text-error'>ERROR: unexpected ')'.<span><br>");
+		$(".add-on").text(">");
+		
+		multiline = false;
+	}
+	else if (parenthesis > 0) {
+		var temp = $(".add-on").text();
+		multiline = true;
+
+		if (temp == ">") {
+			$("#output").append('<div>> ' + str + "</div>");
+			$(".add-on").text("");
+		}
+		else {
+			$("#output").append('<div class=continue>' + str + "</div>");
+		}
+	}
+	else if (parenthesis == 0) {
+		if (str == "clear" && !multiline) {
+			$("#output").text("");
+			input.unshift(str);
+		}
+		else if (line.length > 0) {
+			if (multiline)
+				$("#output").append('<div class=continue>' + str + '</div>');
+			else
+				$("#output").append('<div>> ' + str + '</div>');
+
+
+			line = removeWhiteSpace(line)
+			input.unshift(line);
+			resetDebugFields();
+			alist = parse(line);
+
+			if (alist) {
+				alist = eval(alist);
+
+				if (alist.typ) {
+					updateHeight();
+					alist = unparse(alist);
+
+					if (alist) {
+						$("#output").append('</div><span class=text-success>' + alist + '</span></div>');
+					}
+					else {
+						$("#output").append('<div>></div>');
+					}
+				}
+				else {
+					$("#output").append("</div><span class='text-error'>ERROR: Operation is not supported.<span></div>");
+				}
+			}
+		}
+		else {
+			$("#output").append('<div>></div>');
+			resetDebugFields();
+		}	
+
+		multiline = false;
+		line = "";
+		$(".add-on").text(">");
+		$("#input").val("").focus();
+	}
+	resetInput();
+	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
+}
+
+var checkParen = function(str) {
+	for (var i = 0; i < str.length; i++) {
+		if (str.charAt(i) == '(')
+			parenthesis++;
+		else if (str.charAt(i) == ')')
+			parenthesis--;
+	}
+}
+
 var resetInput = function() {
 	$("#input").val("").focus();
 	command = -1;
 };
 
 var showError = function(error) {
+	$(".add-on").text(">");
 	$("#parse").text("");
 	$("#eval").text("");
-	$("#output").append('<div>> ' + input[0] + "<br><span class='text-error'>ERROR: " + error.message + '<span></div><br>');
+	$("#output").append("<div><span class='text-error'>ERROR: " + error.message + "<span></div>");
 	$(".terminal").scrollTop($(".terminal")[0].scrollHeight);
 	$("#input").val("").focus();
 	command = -1;
+	line = "";
+	multiline = false;
 };
 
 var refreshVars = function() {
@@ -164,7 +244,7 @@ var keywords = [ 'cons',
 								'>=',
 								'or',
 								'and' ],
-		symbolTable = { typ: 'nil' }, parenthesis, addParen, addSpace;
+		symbolTable = { typ: 'nil' }, addParen, addSpace;
 
 var parse = function (line) {
 	var tokens = [], alist = {};
@@ -212,70 +292,60 @@ var eval = function(alist) {
 ///*											HELPER FUNCTIONS FOR parse()		 						*/
 ///********************************************************************/
 
-/* Splits line into an array of tokens and returns it. */
-var tokenize = function(input) {
-	var tokens = [], str, line, multiline;
+/* Splits input into an array of tokens and returns it. */
+var tokenize = function(line) {
+	var tokens = [], str;
 
-	input = input.split("\n");
-	multiline = input.length > 1;
+	if (line.charAt(0) != '(') {
+		tokens.push(line.split(' ')[0]);
+		return tokens;
+	}
 
-	for (var j = 0; j < input.length; j++) {
-		line = input[j];
-
-		if (line.charAt(0) != '(' && !multiline) {
-			tokens.push(line.split(' ')[0]);
-			return tokens;
+	for (var i = 0; i < line.length; i++) {
+		if (line.charAt(i) == "(") {
+			if (line.charAt(i + 1) == ")") {
+				tokens.push("()");
+				i++;
+			}
+			else {
+				tokens.push("(");
+				parenthesis++;
+			}	
+		} 
+		else if (line.charAt(i) == ")") {
+			tokens.push(")");
+			parenthesis--;
 		}
+		else if (line.charAt(i) == "\"") {
+			str = line.charAt(i++);
+			
+			while (line.charAt(i) != "\"" && i < line.length) 
+				str += line.charAt(i++);
 
-		for (var i = 0; i < line.length; i++) {
+			if (line.charAt(i) == '\"')
+				str += "\"";
+
+			tokens.push(str);
+		} 
+		else if (line.charAt(i) != " " && line.charAt(i) != "\t") {
+			str = "";
+			
+			while (["(", ")", " ", "\t"].indexOf(line.charAt(i)) < 0 && i < line.length)
+				str += line.charAt(i++);
+			
+			tokens.push(str);
+			
 			if (line.charAt(i) == "(") {
-				if (line.charAt(i + 1) == ")") {
-					tokens.push("()");
-					i++;
-				}
-				else {
-					tokens.push("(");
-					parenthesis++;
-				}	
-			} 
+				tokens.push("(");
+				parenthesis++;
+			}
 			else if (line.charAt(i) == ")") {
 				tokens.push(")");
 				parenthesis--;
 			}
-			else if (line.charAt(i) == "\"") {
-				str = line.charAt(i++);
-				
-				while (line.charAt(i) != "\"" && i < line.length) 
-					str += line.charAt(i++);
-
-				if (line.charAt(i) == '\"')
-					str += "\"";
-
-				tokens.push(str);
-			} 
-			else if (line.charAt(i) != " " && line.charAt(i) != "\t") {
-				str = "";
-				
-				while (["(", ")", " ", "\t"].indexOf(line.charAt(i)) < 0 && i < line.length)
-					str += line.charAt(i++);
-				
-				tokens.push(str);
-				
-				if (line.charAt(i) == "(") {
-					tokens.push("(");
-					parenthesis++;
-				}
-				else if (line.charAt(i) == ")") {
-					tokens.push(")");
-					parenthesis--;
-				}
-			}
 		}
 	}
-	if (parenthesis == 0)
-		return tokens;
-	else
-		throw new Error("Uneven parenthesis.");
+	return tokens;
 };
 
 /* Creates an association list from array or tokens. */
