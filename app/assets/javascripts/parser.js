@@ -85,20 +85,21 @@ var processInput = function() {
 		line = "";
 		if (multiline)
 			$("#output").append("<div class=continue> " + str + 
-				"</div>" + "<span class='text-error'>ERROR: unexpected ')'.<span><br>");
+				"</div>" + "<span class='prompt text-error'>ERROR: unexpected ')'.<span><br>");
 		else
-			$("#output").append("<div>> " + str + "</div>" + 
-				"<span class='text-error'>ERROR: unexpected ')'.<span><br>");
+			$("#output").append("<div class=prompt>> " + str + "</div>" + 
+				"<span class='prompt text-error'>ERROR: unexpected ')'.<span><br>");
 		$(".add-on").text(">");
 		
 		multiline = false;
+		parenthesis = 0;
 	}
 	else if (parenthesis > 0) {
 		var temp = $(".add-on").text();
 		multiline = true;
 
 		if (temp == ">") {
-			$("#output").append('<div>> ' + str + "</div>");
+			$("#output").append('<div class=prompt>> ' + str + "</div>");
 			$(".add-on").text("");
 		}
 		else {
@@ -114,7 +115,7 @@ var processInput = function() {
 			if (multiline)
 				$("#output").append('<div class=continue>' + str + '</div>');
 			else
-				$("#output").append('<div>> ' + str + '</div>');
+				$("#output").append('<div class=prompt>> ' + str + '</div>');
 
 
 			line = removeWhiteSpace(line)
@@ -130,19 +131,19 @@ var processInput = function() {
 					alist = unparse(alist);
 
 					if (alist) {
-						$("#output").append('</div><span class=text-success>' + alist + '</span></div>');
+						$("#output").append('<div class=prompt><span class=text-success>' + alist + '</span></div>');
 					}
 					else {
-						$("#output").append('<div>></div>');
+						$("#output").append('<div class=prompt>></div>');
 					}
 				}
 				else {
-					$("#output").append("</div><span class='text-error'>ERROR: Operation is not supported.<span></div>");
+					$("#output").append("<div class=prompt><span class='text-error'>ERROR: Operation is not supported.<span></div>");
 				}
 			}
 		}
 		else {
-			$("#output").append('<div>></div>');
+			$("#output").append('<div class=prompt>></div>');
 			resetDebugFields();
 		}	
 
@@ -173,7 +174,7 @@ var showError = function(error) {
 	$(".add-on").text(">");
 	$("#parse").text("");
 	$("#eval").text("");
-	$("#output").append("<div><span class='text-error'>ERROR: " + error.message + "<span></div>");
+	$("#output").append("<div><span class='prompt text-error'>ERROR: " + error.message + "<span></div>");
 	$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 	$("#input").val("").focus();
 	command = -1;
@@ -241,21 +242,25 @@ var addFullscreenListener = function() {
 			resizeTerminal(event);
 			fullscreen = true;
 		}
-		$("#full-screen i").toggleClass("icon-resize-full icon-resize-small")
+		$("#full-screen i").toggleClass("icon-resize-full icon-resize-small");
 	});
-}
+
+	$("#full-screen").hover(function() {
+		$("#full-screen i").toggleClass("icon-white");
+	});
+};
 
 var resetTerminal = function(event) {
 	event.preventDefault();
 	$(window).scrollTop(0);
 	$(".terminal .body").css("min-height", "300px").css("max-height", "300px");
-}
+};
 
 var resizeTerminal = function(event) {
 	event.preventDefault();
 	$(window).scrollTop(55);
 	$(".terminal .body").css("min-height", $(window).height() - 110 + "px").css("max-height", $(window).height() - 110 + "px");
-}
+};
 
 /************************ PARSER ****************************/
 var keywords = [ 'cons', 

@@ -30,12 +30,12 @@
 			text-shadow: none;
 			padding-left: 0;
 			padding-top: 0;
-			margin-right: -2px;
-			margin-left: -4px;
+			margin-right: 0;
 			font-family: inherit;
 		}
 
 		#input {
+			margin-left: -2px;
 			color: white;
 			background: inherit;
 			resize: none;
@@ -49,8 +49,11 @@
 		}
 
 		#output {
+			.prompt {
+				margin-left: 4px;
+			}
 			.continue {
-				margin-left: 16px;
+				margin-left: 20px;
 			}
 			.text-error {
 				color: rgb(253, 90, 90);
