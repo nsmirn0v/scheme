@@ -9,6 +9,7 @@ var input = [],
 $(document).ready(function() {
 	addReturnListener();
 	addUpDownListener();
+	addEscListener();
 	activateTabs();
 	activateTooltips();
 	addTerminalListener();
@@ -25,6 +26,7 @@ var addTerminalListener = function() {
 
 var addReturnListener = function() {
 	$("#input").keydown(function(event) {
+		console.log(event.keyCode);
 		$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 
 		if (event.keyCode == 13) {
@@ -53,6 +55,14 @@ var addCtrlClistener = function() {
 				$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 			}
 			ctrlc = 0;
+	});
+};
+
+var addEscListener = function() {
+	$(document).keydown(function(event) {
+		if (event.keyCode == 27) {
+			$("#full-screen").click();
+		}
 	});
 };
 
@@ -234,6 +244,7 @@ var resetDebugFields = function() {
 
 var addFullscreenListener = function() {
 	$("#full-screen").click(function(event) {
+		$("#terminal-container").toggleClass("popout");
 		if (fullscreen) {
 			resetTerminal(event);
 			fullscreen = false;
@@ -253,13 +264,18 @@ var addFullscreenListener = function() {
 var resetTerminal = function(event) {
 	event.preventDefault();
 	$(window).scrollTop(0);
-	$(".terminal .body").css("min-height", "300px").css("max-height", "300px");
+	$(".terminal .body").css("height", "300px").css("width", "inherit");
+	$("body").css("overflow", "auto");
+	$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 };
 
 var resizeTerminal = function(event) {
 	event.preventDefault();
-	$(window).scrollTop(55);
-	$(".terminal .body").css("min-height", $(window).height() - 110 + "px").css("max-height", $(window).height() - 110 + "px");
+	var w = $(window).width() - 65;
+	var h = $(window).height() - 110;
+	$(".body").css("width", w + "px");
+	$(".body").css("height", h + "px");
+	$("body").css("overflow", "hidden");
 };
 
 /************************ PARSER ****************************/
