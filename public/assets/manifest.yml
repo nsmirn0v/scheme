@@ -3,8 +3,8 @@ background.png: background-ee0875780b37fcdd60048f446bbe9dea.png
 background/index.png: background-ee0875780b37fcdd60048f446bbe9dea.png
 rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
-application.js: application-d59a96d23ab827def1c0056c04fab6dd.js
-application/index.js: application-d59a96d23ab827def1c0056c04fab6dd.js
+application.js: application-6975886588c6d100a268b94acbb71c7f.js
+application/index.js: application-6975886588c6d100a268b94acbb71c7f.js
 application.css: application-8999f29ff778cb624ee4fc18e9880924.css
 application/index.css: application-8999f29ff778cb624ee4fc18e9880924.css
 jquery.min.map: jquery.min-6c267bfd2b3f36e6edccb2e584934c1c.map

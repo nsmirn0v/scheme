@@ -26,7 +26,6 @@ var addTerminalListener = function() {
 
 var addReturnListener = function() {
 	$("#input").keydown(function(event) {
-		console.log(event.keyCode);
 		$(".terminal .body").scrollTop($(".terminal .body")[0].scrollHeight);
 
 		if (event.keyCode == 13) {
