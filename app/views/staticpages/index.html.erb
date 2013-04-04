@@ -96,6 +96,25 @@
 
         <pre class="example">
           <span class="test-run">Test run</span>
+> (def sumlist
+  (lambda (l length i)
+    (if (= i length)
+    (car l)
+    (+ (car l) (sumlist (cdr l) length (+ i 1))))))
+<span class="text-success">procedure sumlist(l length i)</span>
+> (sumlist (list 3 4 6 7) 4 1)
+<span class="text-success">20</span>
+> (sumlist (list 3 4 6 7 100) 5 1)
+<span class="text-success">120</span>
+> (def l
+  (list 1 2 3 4))
+<span class="text-success">(1 2 3 4)</span>
+> (sumlist l 4 1)
+<span class="text-success">10</span>
+> (def l (list 1 2 3 4 5))
+<span class="text-success">(1 2 3 4 5)</span>
+> (sumlist l 5 1)
+<span class="text-success">15</span>
 > (def factorial 
     (lambda 
       (x) 
